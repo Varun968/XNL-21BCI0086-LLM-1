@@ -1,0 +1,26 @@
+version: "3"
+services:
+  backend:
+    build: ../backend/trading_engine
+    ports:
+      - "5000:5000"
+    depends_on:
+      - clickhouse
+      - mongodb
+
+  frontend:
+    build: ../frontend/dashboard
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
+
+  clickhouse:
+    image: yandex/clickhouse-server
+    ports:
+      - "8123:8123"
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
